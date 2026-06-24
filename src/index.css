@@ -1,1 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+:root {
+    --fondo:   #FFF7ED;
+    --navbar:  #78350F;
+    --botón:   #F97316;
+    --detalles:#65A30D;
+    --premium: #D97706;
+    --texto:   #1C1917;
+
+    --font-heading: "Playfair Display", serif;
+    --font-paragraph: "Poppins", sans-serif;
+}
+
+.dark {
+    --fondo:   #1C1917;
+    --navbar:  #F97316;
+    --botón:   #78350F;
+    --detalles:#D97706;
+    --premium: #65A30D;
+    --texto:   #FFF7ED;
+}
+
+@theme {
+    --color-fondo: var(--fondo);
+    --color-navbar: var(--navbar);
+    --color-botón: var(--botón);
+    --color-detalles: var(--detalles);
+    --color-premium: var(--premium);
+    --color-texto: var(--texto);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+}
+
+p, span, a, li, button {
+    font-family: var(--font-paragraph);
+}
