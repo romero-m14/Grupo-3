@@ -1,9 +1,29 @@
-import { useState } from 'react'
-import '../index.css'
+import '../index.css';
+import { useState, useEffect } from 'react';
+import SearchBar from "./SearchBar"
 import FilterList from './FilterList'
+import { FeaturedGrid } from './FeaturedGrid';
 
 export default function Principal() {
   const [modalfilter, setModalfilter] = useState(false);
+
+  const [comidas, setComidas] = useState([]);
+  const [busqueda, setBusqueda]= useState("");
+
+  useEffect(()=> {
+    async function traerComidas() {
+      try{
+        let response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=a")
+        let data = await response.json()
+        setComidas(data.meals);
+      }catch(error){
+        console.log(error);
+      }
+    }
+    traerComidas();
+  },[]);
+
+  const comidasFiltradas = comidas.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
 
   return (
     <div className="col-span-2 bg-fondo min-h-screen text-texto transition-colors duration-300">
@@ -42,6 +62,9 @@ export default function Principal() {
         </div>
       </section>
 
+      {/*  Barra de Busqueda */}
+      <SearchBar busqueda={busqueda} setBusqueda={setBusqueda}/>
+
       {/* Filter Action */}
       <section className="px-6 mb-16 relative">
         <button className="w-full flex items-center justify-between px-5 py-4 border border-navbar/10 rounded-xl transition-colors cursor-pointer active:bg-boton/60"
@@ -67,34 +90,13 @@ export default function Principal() {
             <h2 className="text-2xl md:text-3xl font-bold">Recetas destacadas</h2>
             <div className="h-1 w-12 bg-detalles mt-2 rounded"></div>
           </div>
-          <a href="#todas" className="text-sm font-semibold text-detalles hover:underline">Ver todas →</a>
+          <a href="#todas" className="text-sm font-semibold text-detalles hover:underline">Ver Random →</a>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {[
-            { t: 'Ensalada de quinoa y garbanzos', c: 'Ensaladas', tm: '20 min', e: 'Vegetariana', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80' },
-            { t: 'Crema de zanahoria y jengibre', c: 'Sopas', tm: '25 min', e: 'Vegana', img: 'https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=400&q=80' },
-            { t: 'Pancakes de avena y plátano', c: 'Desayunos', tm: '15 min', e: 'Sin azúcar', img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=400&q=80' }
-          ].map((r, idx) => (
-            <div key={idx} className="bg-fondo border border-texto/10 rounded-2xl overflow-hidden hover:shadow-md transition-all group flex flex-col justify-between">
-              <div className="relative overflow-hidden">
-                <img src={r.img} alt={r.t} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" />
-                <span className="absolute top-3 left-3 bg-premium text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow">{r.c}</span>
-              </div>
-              <div className="p-5 flex-1 flex flex-col justify-between">
-                <h3 className="font-bold text-lg mb-3 line-clamp-2">{r.t}</h3>
-                <div className="flex items-center justify-between mt-auto">
-                  <div className="flex items-center gap-3 text-xs opacity-75">
-                    <span>⏱️ {r.tm}</span>
-                    <span>🍃 {r.e}</span>
-                  </div>
-                  <button className="bg-botón text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90">Ver receta</button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <FeaturedGrid comidas={comidasFiltradas} />
       </section>
+
+      
 
     </div>
   )
