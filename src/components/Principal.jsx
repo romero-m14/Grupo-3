@@ -26,7 +26,7 @@ export default function Principal() {
   const comidasFiltradas = comidas.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
 
   return (
-    <div className="col-span-2 bg-fondo min-h-screen text-texto transition-colors duration-300">
+    <div className="md:col-span-3 bg-fondo min-h-screen text-texto transition-colors duration-300 w-full">
       
       {/* Hero Banner */}
       <section className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid md:grid-cols-2 gap-8 items-center">

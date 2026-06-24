@@ -4,10 +4,9 @@ export default function Header() {
     const [show, setShow] = useState(false);
 
     return (
-        <header className="min-h-12.5 fixed z-5000 w-full bg-navbar text-fondo 
-                           p-6">
+        <header className="min-h-12.5 fixed z-5000 w-full bg-navbar text-fondo p-6">
 
-            <div className="relative flex flex-col gap-4 justify-between">
+            <div className="max-w-7xl mx-auto relative flex flex-col md:flex-row gap-4 justify-between items-center">
                 {/* Logo principal */}                
                 <img className="rounded-full bg-fondo w-13" src="/images/logoTransparent.png" alt="Logo de la pagina principal" />
                 
@@ -21,11 +20,11 @@ export default function Header() {
                 </button>
 
                 {/*  Barra de navegación */}
-                <nav className={`${show ? "flex" : "hidden"} flex-col items-center gap-4 text-base`}>
-                    <a className="hover:bg-boton px-20 py-3" href="#">Recipes</a>
-                    <a className="hover:bg-boton px-20 py-3" href="#">Collections</a>
-                    <a className="hover:bg-boton px-20 py-3" href="#">Techniques</a>
-                    <a className="hover:bg-boton px-20 py-3" href="#">Journal</a>
+                <nav className={`${show ? "flex" : "hidden"} md:flex flex-col md:flex-row items-center gap-1 md:gap-4 text-base w-full md:w-auto mt-4 md:mt-0`}>
+                    <a className="text-fondo hover:bg-boton/20 px-4 py-2 rounded-lg transition-colors duration-200" href="#">Recipes</a>
+                    <a className="text-fondo hover:bg-boton/20 px-4 py-2 rounded-lg transition-colors duration-200" href="#">Collections</a>
+                    <a className="text-fondo hover:bg-boton/20 px-4 py-2 rounded-lg transition-colors duration-200" href="#">Techniques</a>
+                    <a className="text-fondo hover:bg-boton/20 px-4 py-2 rounded-lg transition-colors duration-200" href="#">Journal</a>
                 </nav>
             </div>
         </header>

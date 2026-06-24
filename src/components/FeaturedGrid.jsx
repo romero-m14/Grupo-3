@@ -1,6 +1,6 @@
 export function FeaturedGrid({comidas}) {
     return (
-        <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  bg-amber-50/30">
+        <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 bg-amber-50/30">
             {comidas.map((comida) => (
                 <article
                 key={comida.idMeal}
@@ -20,7 +20,7 @@ export function FeaturedGrid({comidas}) {
                     </div>
 
                     {/* Cuerpo de la Tarjeta */}
-                    <div className="p-5 flex-1 flex flex-col justify-between">
+                    <div className="p-5 flex-1 flex flex-col justify-between h-full">
                         <h3 className="font-bold text-lg mb-3 line-clamp-2">
                             {comida.strMeal}
                         </h3>

@@ -8,7 +8,7 @@ export default function Home() {
         <>
             <Header />
 
-            <main className="pt-25 grid grid-cols-1 md:grid-cols-3">
+            <main className="pt-25 w-full bg-fondo">
                 <Principal />
             </main>
 
