@@ -1,9 +1,14 @@
+import { useState } from 'react'
 import '../index.css'
+import FilterList from './FilterList'
 
 export default function Principal() {
+  const [modalfilter, setModalfilter] = useState(false);
+
   return (
     <div className="col-span-2 bg-fondo min-h-screen text-texto transition-colors duration-300">
       
+      {/* Hero Banner */}
       <section className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
           <div className="text-detalles font-medium text-sm">🌿 Recetas saludables para tu día a día</div>
@@ -17,6 +22,7 @@ export default function Principal() {
         </div>
       </section>
 
+      {/* Benefits */}
       <section className="max-w-7xl mx-auto px-6 mb-16">
         <div className="bg-fondo border border-texto/10 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
@@ -36,6 +42,25 @@ export default function Principal() {
         </div>
       </section>
 
+      {/* Filter Action */}
+      <section className="px-6 mb-16 relative">
+        <button className="w-full flex items-center justify-between px-5 py-4 border border-navbar/10 rounded-xl transition-colors cursor-pointer active:bg-boton/60"
+                onClick={() => setModalfilter(!modalfilter)}
+        >
+          <div className='flex items-center gap-3'>
+            <span className="material-symbols-outlined text-navbar">tune</span>
+            <span className="text-navbar text-xl">Filtros</span>
+          </div>
+          <span className="material-symbols-outlined text-navbar/80">chevron_right</span>
+        </button>
+
+        {/* Filter Modal */}
+        <aside className={`${modalfilter ? "block" : "hidden"} absolute z-5000 top-full mt-4 bg-fondo col-span-1 pl-2 pr-6`}>
+          <FilterList />
+        </aside>
+      </section>
+
+      {/* Featured Recipes Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
         <div className="flex justify-between items-end mb-8">
           <div>
