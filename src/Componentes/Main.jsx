@@ -9,7 +9,7 @@ function Main() {
           <div className="text-detalles font-medium text-sm">🌿 Recetas saludables para tu día a día</div>
           <h1 className="text-4xl md:text-6xl font-bold leading-tight">Come saludable, <br /> vive mejor</h1>
           <p className="opacity-80 max-w-md">Descubre recetas fáciles, deliciosas y nutritivas para chuparse los dedos</p>
-          <button className="bg-botón text-white font-semibold px-6 py-3 rounded-xl shadow transition-transform transform hover:-translate-y-0.5">Ver recetas →</button>
+          <button className="bg-botón text-black font-semibold px-6 py-3 rounded-xl shadow transition-transform transform hover:-translate-y-0.5">Ver recetas →</button>
         </div>
         <div className="relative flex justify-center">
           <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Plato" className="w-full max-w-sm rounded-full aspect-square border-8 border-fondo shadow-xl object-cover" />
@@ -63,7 +63,7 @@ function Main() {
                     <span>⏱️ {r.tm}</span>
                     <span>🍃 {r.e}</span>
                   </div>
-                  <button className="bg-botón text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90">Ver receta</button>
+                  <button className="bg-botón text-black text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90">Ver receta</button>
                 </div>
               </div>
             </div>
