@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useContry } from "../hooks/useCountry"
 
 export default function FilterSection({title, data, property}) {
     const [filterCountry, setFilterCountry] = useState("");
-    const [filterMeals, setFilterMeals] = useState([]);
-    console.log(filterMeals)
+    const recipes = useContry(filterCountry)
     
-    useEffect(() => {
-      async function fetchAreas() {
-        try {
-          const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${filterCountry}`)
-
-          if(!response.ok) {
-            throw new Error("Fallo la coneccion con la Api")
-          }
-          const datas = await response.json()
-          setFilterMeals(datas.meals)
-
-        } catch (error) {
-          console.error(error)
-        }
-      }
-      fetchAreas()
-    }, [filterCountry])
+    console.log(recipes)
 
     return (
         <section className="mt-4 border-b border-navbar/20">
