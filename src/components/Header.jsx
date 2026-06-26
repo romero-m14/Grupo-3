@@ -6,13 +6,13 @@ export default function Header() {
     return (
         <header className="min-h-12.5 fixed z-5000 w-full bg-navbar text-fondo p-6">
 
-            <div className="max-w-7xl mx-auto relative flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="max-w-7xl mx-auto relative flex flex-col md:flex-row gap-4 md:justify-between">
                 {/* Logo principal */}                
                 <img className="rounded-full bg-fondo w-13" src="/images/logoTransparent.png" alt="Logo de la pagina principal" />
                 
                 {/*  Botón Hamburger */}
                 <button onClick={() => setShow(!show)} 
-                        className="cursor-pointer absolute top-4 right-6 md:hidden flex flex-col gap-2"
+                        className="cursor-pointer absolute top-2 right-6 md:hidden flex flex-col gap-2"
                 >
                     <span className={`bg-fondo w-8 h-1 rounded-full transition-all duration-300 ease-in-out ${show ? "opacity-0" : ""}`}></span>
                     <span className={`bg-fondo w-8 h-1 rounded-full transition-all duration-300 ease-in-out ${show ? "rotate-45" : ""}`}></span>

@@ -1,9 +1,9 @@
 
 export default function SearchBar({busqueda, setBusqueda}) {
   return (
-    <div className="flex flex-col gap-2 w-full mx-auto px-6 mb-8">
+    <div className="flex flex-col md:items-center gap-2 w-full mx-auto px-6 mb-8 md:mb-0">
     
-     <div className="relative flex items-center">
+     <div className="md:w-full relative flex items-center">
       <input
           type="text"
           placeholder="Buscar una receta..."

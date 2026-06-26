@@ -62,26 +62,28 @@ export default function Principal() {
         </div>
       </section>
 
-      {/*  Barra de Busqueda */}
-      <SearchBar busqueda={busqueda} setBusqueda={setBusqueda}/>
+      <div className="grid md:grid-cols-2 md:max-w-7xl md:justify-between md:items-center md:mx-auto md:mb-14">
+        {/*  Barra de Busqueda */}
+        <SearchBar busqueda={busqueda} setBusqueda={setBusqueda}/>
 
-      {/* Filter Action */}
-      <section className="px-6 mb-16 relative">
-        <button className="w-full flex items-center justify-between px-5 py-4 border border-navbar/10 rounded-xl transition-colors cursor-pointer active:bg-boton/60"
-                onClick={() => setModalfilter(!modalfilter)}
-        >
-          <div className='flex items-center gap-3'>
-            <span className="material-symbols-outlined text-navbar">tune</span>
-            <span className="text-navbar text-xl">Filtros</span>
-          </div>
-          <span className="material-symbols-outlined text-navbar/80">chevron_right</span>
-        </button>
+        {/* Filter Action */}
+        <section className="px-6 mb-16 md:mb-0 relative">
+          <button className="w-full flex items-center justify-between px-5 py-4 border border-navbar/10 rounded-xl transition-colors cursor-pointer active:bg-boton/60"
+                  onClick={() => setModalfilter(!modalfilter)}
+          >
+            <div className='flex items-center gap-3'>
+              <span className="material-symbols-outlined text-navbar">tune</span>
+              <span className="text-navbar text-xl">Filtros</span>
+            </div>
+            <span className="material-symbols-outlined text-navbar/80">chevron_right</span>
+          </button>
 
-        {/* Filter Modal */}
-        <aside className={`${modalfilter ? "block" : "hidden"} absolute z-5000 top-full mt-4 bg-fondo col-span-1 pl-2 pr-6`}>
-          <FilterList />
-        </aside>
-      </section>
+          {/* Filter Modal */}
+          <aside className={`${modalfilter ? "block" : "hidden"} absolute z-5000 top-full mt-4 bg-fondo col-span-1 pl-2 pr-6`}>
+            <FilterList />
+          </aside>
+        </section>
+      </div>
 
       {/* Featured Recipes Grid */}
       <section className="max-w-7xl mx-auto px-6 pb-20">
