@@ -1,27 +1,19 @@
 import '../index.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchBar from "./SearchBar"
 import FilterList from './FilterList'
 import { FeaturedGrid } from './FeaturedGrid';
+import { useMeals } from '../hooks/useMeals';
 
 export default function Principal() {
   const [modalfilter, setModalfilter] = useState(false);
-
-  const [comidas, setComidas] = useState([]);
   const [busqueda, setBusqueda]= useState("");
 
-  useEffect(()=> {
-    async function traerComidas() {
-      try{
-        let response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=a")
-        let data = await response.json()
-        setComidas(data.meals);
-      }catch(error){
-        console.log(error);
-      }
-    }
-    traerComidas();
-  },[]);
+  const { loading, error, comidas } = useMeals();
+
+  if(loading) return <p className='text-texto'>Espere Cargando...</p>
+
+  if(error) return <p className='text-red-700'>{error}</p>
 
   const comidasFiltradas = comidas.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
 
@@ -63,6 +55,7 @@ export default function Principal() {
       </section>
 
       <div className="grid md:grid-cols-2 md:max-w-7xl md:justify-between md:items-center md:mx-auto md:mb-14">
+        
         {/*  Barra de Busqueda */}
         <SearchBar busqueda={busqueda} setBusqueda={setBusqueda}/>
 
@@ -97,8 +90,6 @@ export default function Principal() {
 
         <FeaturedGrid comidas={comidasFiltradas} />
       </section>
-
-      
 
     </div>
   )
