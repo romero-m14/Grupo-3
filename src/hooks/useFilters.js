@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
-import FilterSection from "./FilterSection";
 
-export default function FilterList() {
+export function useFilters() {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
     const [categories, setCategories] = useState([]);
     const [areas, setAreas] = useState([]);
     const [ingredients, setIngredients] = useState([]);
@@ -16,6 +18,10 @@ export default function FilterList() {
                                                     fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list"),
                                                     fetch("https://www.themealdb.com/api/json/v1/1/list.php?i=list")]);
                 
+                if(!catRes.ok || !areaRes.ok || !ingreRes.ok ) {
+                    throw new Error("Fallo la conexion con la API");
+                }
+
                 const [catData, areaData, ingreData] = await Promise.all([
                                                     catRes.json(),
                                                     areaRes.json(),
@@ -27,28 +33,13 @@ export default function FilterList() {
                 setIngredients(ingreData.meals)
 
             } catch (error) {
-                console.error(error);
+                setError(error.message)
+            } finally {
+                setLoading(false)
             }
         }
         fetchDatas();
     }, [])
 
-    return (
-        <>
-            <FilterSection 
-                title="Categorías"
-                data={categories}
-                property="strCategory"/>
-
-            <FilterSection 
-                title="País"
-                data={areas}
-                property="strCountry"/>
-                        
-            <FilterSection 
-                title="Ingredientes"
-                data={ingredients}
-                property="strIngredient"/>
-        </>
-    )
+    return { loading, error, categories, areas, ingredients}
 }

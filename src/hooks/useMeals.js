@@ -19,7 +19,7 @@ export function useMeals() {
                 
             }catch(error){
                 setError(error.message)
-                console.log(error);
+                console.error(error);
             } finally {
                 setLoading(false);
             }
