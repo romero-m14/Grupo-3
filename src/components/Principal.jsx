@@ -1,21 +1,50 @@
 import '../index.css';
 import { useState } from 'react';
 import SearchBar from "./SearchBar"
-import FilterList from './FilterList'
 import { FeaturedGrid } from './FeaturedGrid';
 import { useMeals } from '../hooks/useMeals';
+import { useFilters } from "../hooks/useFilters";
+import { useContry } from "../hooks/useCountry";
+import { useCategory } from "../hooks/useCategory";
+import { useIngredient } from "../hooks/useIngredient";
 
 export default function Principal() {
+  // Abre y cierra el modal de los 
+  // busqueda de receta
   const [modalfilter, setModalfilter] = useState(false);
   const [busqueda, setBusqueda]= useState("");
-
+  const [applyFilter, setApplyFilter] = useState({    // se llena con el valor del botón de filtros
+    category: "",
+    country: "",
+    ingredient: ""
+  });
+  
+  // Traer las comidas a la ventana principal 
+  // y renderizar los 3 filtros
   const { loading, error, comidas } = useMeals();
+  const { categories, areas, ingredients } = useFilters();
+  const { filterMeals } = useContry(applyFilter.country)                  // Consume la api y busca por país
+  const { filterCategory } = useCategory(applyFilter.category);
+  const { filterIngredient } = useIngredient(applyFilter.ingredient);
+  
+  // Aplicar filtros
+  let recetasMostrar;
+                      
+  if(applyFilter.country) {
+    recetasMostrar = filterMeals ?? [];
+  } else if (applyFilter.category) {
+    recetasMostrar = filterCategory ?? [];
+  } else if (applyFilter.ingredient) {
+    recetasMostrar = filterIngredient ?? [];
+  } else {
+    recetasMostrar = comidas;
+  }
 
+  // Busqueda de comidas
+  const comidasFiltradas = recetasMostrar?.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
+  
   if(loading) return <p className='text-texto'>Espere Cargando...</p>
-
   if(error) return <p className='text-red-700'>{error}</p>
-
-  const comidasFiltradas = comidas.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
 
   return (
     <div className="md:col-span-3 bg-fondo min-h-screen text-texto transition-colors duration-300 w-full">
@@ -73,7 +102,46 @@ export default function Principal() {
 
           {/* Filter Modal */}
           <aside className={`${modalfilter ? "block" : "hidden"} absolute z-5000 top-full mt-4 bg-fondo col-span-1 pl-2 pr-6`}>
-            <FilterList />
+              
+              {/* Filter by Category */}
+              <section className="mt-4 border-b border-navbar/20">
+                <h2 className="font-bold tracking-widest uppercase text-navbar text-xl">Categorías</h2>
+                
+                <ul className="m-4 p-6 flex flex-wrap gap-4 overflow-y-auto max-h-40">
+                  {categories?.map((m) => (
+                    <li key={m.strCategory}>
+                      <button onClick={() => setApplyFilter({category: m.strCategory})} className="bg-boton text-fondo p-4 rounded-md cursor-pointer active:bg-navbar">{m.strCategory}</button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              {/* Filter by Country */}
+              <section className="mt-4 border-b border-navbar/20">
+                <h2 className="font-bold tracking-widest uppercase text-navbar text-xl">País</h2>
+                
+                <ul className="m-4 p-6 flex flex-wrap gap-4 overflow-y-auto max-h-40">
+                  {areas?.map((m) => (
+                    <li key={m.strCountry}>
+                      <button onClick={() => setApplyFilter({country: m.strCountry})} className="bg-boton text-fondo p-4 rounded-md cursor-pointer active:bg-navbar">{m.strCountry}</button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              {/* Filter by Ingredient */}
+              <section className="mt-4 border-b border-navbar/20">
+                <h2 className="font-bold tracking-widest uppercase text-navbar text-xl">Ingredientes</h2>
+                
+                <ul className="m-4 p-6 flex flex-wrap gap-4 overflow-y-auto max-h-40">
+                  {ingredients?.map((m) => (
+                    <li key={m.strIngredient}>
+                      <button onClick={() => setApplyFilter({ingredient: m.strIngredient})} className="bg-boton text-fondo p-4 rounded-md cursor-pointer active:bg-navbar">{m.strIngredient}</button>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+                          
           </aside>
         </section>
       </div>

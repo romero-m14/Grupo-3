@@ -4,7 +4,7 @@ export default function Header() {
     const [show, setShow] = useState(false);
 
     return (
-        <header className="min-h-12.5 fixed z-5000 w-full bg-navbar text-fondo p-6">
+        <header className="min-h-12.5 fixed z-9000 w-full bg-navbar text-fondo p-6">
 
             <div className="max-w-7xl mx-auto relative flex flex-col md:flex-row gap-4 md:justify-between">
                 {/* Logo principal */}                

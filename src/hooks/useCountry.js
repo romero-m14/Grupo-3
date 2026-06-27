@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 
 export function useContry(country) {
-    
     const [filterMeals, setFilterMeals] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
