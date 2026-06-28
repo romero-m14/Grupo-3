@@ -1,35 +1,14 @@
-import { useState, useEffect } from "react";
-import FoodCards from "./components/FoodCards"
-import FoodFilter from "./components/FoodFilter";
+import Home from "./pages/Home"
+import About from "./pages/About"
+import { Route, Routes } from "react-router-dom";
 
-function App() {
-  const [comidas, setComidas] = useState([]);
-  const [busqueda, setBusqueda]= useState("");
-
-  useEffect(()=> {
-    async function traerComidas(params) {
-      try{
-        let response = await fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=a")
-        let data = await response.json()
-        setComidas(data.meals);
-      }catch(error){
-        console.log(error);
-      }
-    }
-    traerComidas();
-  },[]);
-
-  const comidasFiltradas = comidas.filter((comida) => comida.strMeal.toLowerCase().includes(busqueda.toLocaleLowerCase()));
-
+export default function App() {
   return (
     <>
-    <main>
-      <FoodFilter busqueda={busqueda} setBusqueda={setBusqueda}/>
-      <FoodCards comidas={comidasFiltradas}/>
-    </main>
-      
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/about" element={<About />}></Route>
+      </Routes>
     </>
   )
 }
-
-export default App;
