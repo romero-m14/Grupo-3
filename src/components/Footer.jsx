@@ -60,7 +60,7 @@ export default function Footer() {
             </div>
 
             <div className="border-t border-fondo/5 px-6 py-8 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-background/50 font-label-sm">
-                <p>© 2026 CulinaryArtisan. | Hecho por Aldair, Miguel, Jose y Guiselli(Gi) Funval 2026</p>
+                <p>© 2026 CulinaryArtisan. | Hecho por Aldair, Miguel, Jose y Giselli(Gi) Funval 2026</p>
             </div>
         </footer>
     )
