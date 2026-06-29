@@ -6,9 +6,29 @@ import { useMeals } from '../hooks/useMeals';
 import { useFilters } from "../hooks/useFilters";
 import { useContry } from "../hooks/useCountry";
 import { useCategory } from "../hooks/useCategory";
-import { useIngredient } from "../hooks/useIngredient";
+import { useIngredient } from "../hooks/useIngredient"; 
+import { useRandomMeal } from '../hooks/useRandomMeal';
 
 export default function Principal() {
+  /* Estado para guardar los 3 platos ramdoms */
+  const [recetasBotonRandom, setRecetasBotonRandom] = useState([]);
+  const { obtenerPlatosRandomDeApi, loadingRandom } = useRandomMeal();
+
+  /* Ejecucion para que funcione el boton */
+  const ejecutarAccionRandom = async (e) => {
+    e.preventDefault();
+    const platosSueltos = await obtenerPlatosRandomDeApi();
+    setBusqueda("");
+    setApplyFilter({ category: "", country: "", ingredient: "" });
+    setRecetasBotonRandom(platosSueltos);
+  };
+
+  /* Limpiador para tener otros platos ramdoms */
+  const limpiarRandomYFiltrar = (nuevoFiltro) => {
+    setRecetasBotonRandom([]); 
+    setApplyFilter(nuevoFiltro);
+  };
+
   // Abre y cierra el modal de los 
   // busqueda de receta
   const [modalfilter, setModalfilter] = useState(false);
@@ -18,6 +38,22 @@ export default function Principal() {
     country: "",
     ingredient: ""
   });
+
+  const [platosRandom, setPlatosRandom] = useState([]);
+
+  const handleVerRandom = (e) => {
+    e.preventDefault();
+    if (!comidas || comidas.length === 0) return;
+    setBusqueda("");
+    setApplyFilter({ category: "", country: "", ingredient: "" });
+    const mezcladas = [...comidas].sort(() => 0.5 - Math.random());
+    setPlatosRandom(mezcladas.slice(0, 3));
+  };
+
+  const cambiarFiltro = (nuevoFiltro) => {
+    setPlatosRandom([]);
+    setApplyFilter(nuevoFiltro);
+  };
   
   // Traer las comidas a la ventana principal 
   // y renderizar los 3 filtros
@@ -30,7 +66,9 @@ export default function Principal() {
   // Aplicar filtros
   let recetasMostrar;
                       
-  if(applyFilter.country) {
+  if (recetasBotonRandom.length > 0 && !applyFilter.country && !applyFilter.category && !applyFilter.ingredient) { /* Esto ayuda para que despues de presionar el boton de ramdoms puedes usar los filtors */
+    recetasMostrar = recetasBotonRandom;
+  } else if (applyFilter.country) {
     recetasMostrar = filterMeals ?? [];
   } else if (applyFilter.category) {
     recetasMostrar = filterCategory ?? [];
@@ -48,7 +86,7 @@ export default function Principal() {
 
   return (
     <div className="md:col-span-3 bg-fondo min-h-screen text-texto transition-colors duration-300 w-full">
-      
+
       {/* Hero Banner */}
       <section className="max-w-7xl mx-auto px-6 py-12 md:py-20 grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
@@ -153,7 +191,13 @@ export default function Principal() {
             <h2 className="text-2xl md:text-3xl font-bold">Recetas destacadas</h2>
             <div className="h-1 w-12 bg-detalles mt-2 rounded"></div>
           </div>
-          <a href="#todas" className="text-sm font-semibold text-detalles hover:underline">Ver Random →</a>
+          <button 
+            onClick={ejecutarAccionRandom} 
+            disabled={loadingRandom}
+            className="text-sm font-semibold text-detalles hover:underline cursor-pointer bg-transparent border-none disabled:opacity-50"
+          >
+            {loadingRandom ? "Buscando..." : "Ver Random →"}
+          </button>
         </div>
 
         <FeaturedGrid comidas={comidasFiltradas} />
