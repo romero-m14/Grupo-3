@@ -1,4 +1,7 @@
+import { Link } from "react-router-dom";
+
 function FoodCards({ comidas }) {
+
   return (
     <section className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6 bg-amber-50/30">
       {comidas.map((comida) => (
@@ -36,9 +39,9 @@ function FoodCards({ comidas }) {
                   {comida.strArea}
                 </p>
               </div>
-              <button className="bg-botón text-gray-400 text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90">
+              <Link to={`/recipe-details/${comida.idMeal}`} className="bg-boton text-gray-400 text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-90">
                 Ver receta
-              </button>
+              </Link>
             </div>
           </div>
         </article>
