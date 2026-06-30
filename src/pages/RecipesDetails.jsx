@@ -1,4 +1,5 @@
 import { useRecipe } from "../hooks/useRecipe";
+import {Link} from "react-router-dom";
 
 export default function RecipeDetails() {
   const { receta, loading, error, ingredientes, youtubeEmbedUrl } = useRecipe();
@@ -30,6 +31,13 @@ export default function RecipeDetails() {
         {/*capa oscura sobre imagen*/}
         <div className="absolute inset-0 bg-black/35"></div>
 
+        <div className="absolute top-6 left-6 z-10">
+          <Link to="/" className="flex items-center gap-1.5 bg-black/40 text-white backdrop-blur-sm border border-white/10 hover:bg-black/60 px-3 py-1.5 rounded-xl text-sm transition-all">
+            <span className="material-symbols-outlined text-base">arrow_back</span>
+            <span>Volver</span>
+          </Link>
+        </div>
+
         {/*etiquetas filtros*/}
         <div className="absolute inset-0 flex flex-col justify-end p-6">
           <div className="flex gap-2 mb-2">
@@ -40,6 +48,7 @@ export default function RecipeDetails() {
               {receta.strArea}
             </span>
           </div>
+          
 
           {/*título*/}
           <h1
@@ -116,4 +125,5 @@ export default function RecipeDetails() {
       </div>
     </div>
   );
+  
 }
